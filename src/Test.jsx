@@ -1,22 +1,31 @@
-import {motion} from "framer-motion"
+import { motion } from "framer-motion";
+import { useState } from "react";
 
 const Test = () => {
-    const items=["pon", "naman", "pappa","dee", "mom"]
-    
-    return(
-        <div className="course">
-            <motion.ul 
-                initial={{opacity:0}}
-                animate={{opacity:1,transition:{staggerChildren: 0.2}}}
-            >
+  const [open, setOpen] = useState(false);
 
-                {items.map((item, index)=>(
-                    <motion.li 
-                initial={{opacity:0}}
-                animate={{opacity:1,transition:{staggerChildren: 0.2}}}key={items[index]}>{items[index]}</motion.li>
-                ))}
-            </motion.ul>
-        </div>
-    )
-}
+  const variants = {
+    visible: (i)=>( {
+      opacity: 1,
+      x: 100,
+      transition: { delay:i * 0.3 },
+    }),
+    hidden: { opacity: 0 },
+  };
+
+  const items = ["item1", "item2", "item3", "item4"];
+
+  return (
+    <div className="course">
+      <motion.ul initial="hidden" animate="visible" variants={variants}>
+        {items.map((item,i) => (
+          <motion.li variants={variants} key={item} custom={i}>
+            {item}
+          </motion.li>
+        ))}
+      </motion.ul>
+    </div>
+  );
+};
+
 export default Test;
